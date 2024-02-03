@@ -38,6 +38,7 @@ function DateTime(props) {
 }
 
 function Video(props) {
+  const DateTimePretty = withDateTimePretty(DateTime);
   return (
     <div className="video">
       <iframe
@@ -62,23 +63,25 @@ function VideoList(props) {
   ));
 }
 
-function DateTimePretty(props) {
-  const date = moment(props.date);
-  const now = moment();
-  const duration = moment.duration(now.diff(date));
-  const minutes = parseInt(duration.asMinutes());
-  let time = '';
-  if (minutes < 60) {
-    time = getMinutes(minutes);
-  } else if (minutes < 24*60) {
-    const hours = parseInt(minutes / 60);
-    time = getHours(hours);
-  } else {
-    const days = parseInt(minutes / (24*60))
-    time = getDays(days);
-  }
-  return <div>{time}</div>
-}
+const withDateTimePretty = (DateTime) => {
+  return function DateTimePretty(props) {
+    const date = moment(props.date);
+    const now = moment();
+    const duration = moment.duration(now.diff(date));
+    const minutes = parseInt(duration.asMinutes());
+    let time = "";
+    if (minutes < 60) {
+      time = getMinutes(minutes);
+    } else if (minutes < 24 * 60) {
+      const hours = parseInt(minutes / 60);
+      time = getHours(hours);
+    } else {
+      const days = parseInt(minutes / (24 * 60));
+      time = getDays(days);
+    }
+    return <DateTime date={time}></DateTime>;
+  };
+};
 
 function getMinutes(minutes) {
   if (minutes % 10 === 1) {
@@ -109,6 +112,5 @@ function getDays(days) {
     return `${days} дней назад`;
   }
 }
-
 
 export default App;
