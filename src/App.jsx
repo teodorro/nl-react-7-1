@@ -1,9 +1,11 @@
 import { useState } from "react";
 import "./App.css";
 import moment from "moment";
+import './css/index.css';
+import PropTypes from 'prop-types';
 
 function App() {
-  const [list, setList] = useState([
+  const [list] = useState([
     {
       url: "https://www.youtube.com/embed/rN6nlNC9WQA?rel=0&amp;controls=0&amp;showinfo=0",
       date: "2023-07-31 13:24:00",
@@ -112,5 +114,16 @@ function getDays(days) {
     return `${days} дней назад`;
   }
 }
+
+DateTime.propTypes = {
+  date: PropTypes.string,
+}
+Video.propTypes = {
+  url: PropTypes.string,
+  date: PropTypes.string,
+}
+// DateTimePretty.propTypes = {
+//   date: PropTypes.string,
+// }
 
 export default App;
